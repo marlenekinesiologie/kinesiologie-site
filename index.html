@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Site Kinesiologie</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <style>
+    body, html { margin:0; padding:0; font-family:"Georgia", serif; scroll-behavior:smooth; }
+    .slide { position:relative; height:100vh; display:flex; align-items:center; justify-content:center; background-color:#f5e1da; background-repeat:no-repeat; background-position:center; background-size:contain; opacity:0; transform:scale(1.05); transition:opacity 1s ease, transform 1s ease; }
+    .slide.visible { opacity:1; transform:scale(1); }
+    .overlay { position:relative; z-index:1; background: rgba(255,255,255,0.65); padding:20px; border-radius:12px; text-align:center; max-width:900px; }
+    h1,h2 { margin:0.2em 0; color:#6b4f4f; }
+    #menuBtn { position:fixed; top:20px; left:20px; z-index:10000; width:40px; height:30px; display:flex; flex-direction:column; justify-content:space-between; cursor:pointer; }
+    #menuBtn span { display:block; height:4px; background:#6b4f4f; border-radius:5px; }
+    #sideMenu { position:fixed; top:0; left:-320px; width:320px; height:100%; background:#f5e1da; padding:40px 20px; box-shadow:2px 0 18px rgba(0,0,0,0.12); transition:0.35s; z-index:9999; }
+    #sideMenu a { display:block; margin:18px 0; color:#6b4f4f; text-decoration:none; font-size:18px; }
+    #sideMenu.open { left:0; }
+    #reservation { background:#f5e1da; padding:60px 20px; }
+    #reservation form { display:flex; flex-direction:column; gap:16px; }
+    #reservation input, #reservation textarea { padding:12px; border-radius:6px; border:1px solid #ccc; font-size:16px; width:100%; box-sizing:border-box; }
+    #reservation button { padding:14px; background:#6b4f4f; color:white; font-size:18px; border:none; border-radius:8px; cursor:pointer; transition:all 0.3s ease; }
+    #reservation button:hover { background:#503b3b; transform:scale(1.05); }
+    #confirmation { color:green; text-align:center; margin-top:16px; display:none; }
+    @media (max-width:800px){ #sideMenu{width:260px;} .overlay{padding:16px;margin:12px;} #menuBtn{left:12px;top:12px;} }
+  </style>
+</head>
+<body>
+
+<div id="menuBtn" onclick="toggleMenu()">
+  <span></span><span></span><span></span>
+</div>
+
+<nav id="sideMenu" aria-hidden="true">
+  <a href="#slide1">Accueil</a>
+  <a href="#slide2">Qui suis-je</a>
+  <a href="#slide3">Kinesiologie</a>
+  <a href="#slide4">Comment ça se déroule</a>
+  <a href="#slide5">Pour quels besoins</a>
+  <a href="#slide6">Tarifs</a>
+  <a href="#reservation">Réservation</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<!-- Slides -->
+<section id="slide1" class="slide" style="background-image:url('https://raw.githubusercontent.com/marlenekinesiologie/kinesiologie-site/1e02de88aa60e3d7feb46c2256ab6fa69142dfd6/Screenshot%202025-12-10%2021.09.01.png');">
+  <div class="overlay"><h1>Bienvenue</h1></div>
+</section>
+<section id="slide2" class="slide" style="background-image:url('https://raw.githubusercontent.com/marlenekinesiologie/kinesiologie-site/1e02de88aa60e3d7feb46c2256ab6fa69142dfd6/Screenshot%202025-12-10%2021.09.36.png');">
+  <div class="overlay"><h2>Slide 2</h2></div>
+</section>
+<section id="slide3" class="slide" style="background-image:url('https://raw.githubusercontent.com/marlenekinesiologie/kinesiologie-site/1e02de88aa60e3d7feb46c2256ab6fa69142dfd6/Screenshot%202025-12-10%2021.09.53.png');">
+  <div class="overlay"><h2>Slide 3</h2></div>
+</section>
+<section id="slide4" class="slide" style="background-image:url('https://raw.githubusercontent.com/marlenekinesiologie/kinesiologie-site/1e02de88aa60e3d7feb46c2256ab6fa69142dfd6/Screenshot%202025-12-10%2021.10.07.png');">
+  <div class="overlay"><h2>Slide 4</h2></div>
+</section>
+<section id="slide5" class="slide" style="background-image:url('https://raw.githubusercontent.com/marlenekinesiologie/kinesiologie-site/1e02de88aa60e3d7feb46c2256ab6fa69142dfd6/Screenshot%202025-12-10%2021.10.33.png');">
+  <div class="overlay"><h2>Slide 5</h2></div>
+</section>
+<section id="slide6" class="slide" style="background-image:url('https://raw.githubusercontent.com/marlenekinesiologie/kinesiologie-site/1e02de88aa60e3d7feb46c2256ab6fa69142dfd6/Screenshot%202025-12-10%2021.10.43.png');">
+  <div class="overlay"><h2>Slide 6</h2></div>
+</section>
+
+<!-- Section Réservation -->
+<section id="reservation">
+  <div style="max-width:800px; margin:0 auto; background:rgba(255,255,255,0.95); padding:40px; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.1);">
+    <h2 style="color:#6b4f4f; text-align:center; margin-bottom:30px;">Réserver une séance</h2>
+    <form id="reservationForm">
+      <input type="text" name="nom" placeholder="Nom" required>
+      <input type="text" name="prenom" placeholder="Prénom" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="tel" name="telephone" placeholder="Téléphone" required>
+      <label for="datePicker" style="font-weight:bold; color:#6b4f4f;">Date et heure souhaitée :</label>
+      <input type="text" id="datePicker" name="date" placeholder="Sélectionnez date et heure" required>
+      <textarea name="message" placeholder="Message / commentaire" rows="4"></textarea>
+      <button type="submit">Réserver</button>
+    </form>
+    <p id="confirmation">Merci ! Votre réservation a été envoyée.</p>
+  </div>
+</section>
+
+<section id="contact" class="slide">
+  <div class="overlay">
+    <h2>Contact</h2>
+    <p>Téléphone : 07 50 97 84 01</p>
+    <p>Email : marlene.kinesiologie@gmail.com</p>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+  // Menu toggle
+  function toggleMenu() {
+    const menu = document.getElementById('sideMenu');
+    menu.classList.toggle('open');
+    const open = menu.classList.contains('open');
+    menu.setAttribute('aria-hidden', (!open).toString());
+  }
+  document.querySelectorAll('#sideMenu a').forEach(a => a.addEventListener('click', () => {
+    document.getElementById('sideMenu').classList.remove('open');
+    document.getElementById('sideMenu').setAttribute('aria-hidden','true');
+  }));
+
+  // Slides effet fondu
+  function checkSlides() {
+    const slides = document.querySelectorAll('.slide');
+    const triggerBottom = window.innerHeight * 0.8;
+    slides.forEach(slide => {
+      const slideTop = slide.getBoundingClientRect().top;
+      if(slideTop < triggerBottom){
+        slide.classList.add('visible');
+      }
+    });
+  }
+  window.addEventListener('scroll', checkSlides);
+  window.addEventListener('load', checkSlides);
+
+  // Charger les dates déjà réservées et initialiser Flatpickr
+  fetch('reservations.json')
+    .then(res => res.json())
+    .then(dates => {
+      const disabledDates = dates.map(r => r.date);
+      flatpickr("#datePicker", {
+        enableTime: true,
+        dateFormat: "d/m/Y H:i",
+        minDate: "today",
+        time_24hr: true,
+        disable: disabledDates
+      });
+    })
+    .catch(() => {
+      // Si fichier inexistant
+      flatpickr("#datePicker", { enableTime:true, dateFormat:"d/m/Y H:i", minDate:"today", time_24hr:true });
+    });
+
+  // Envoi du formulaire via PHP
+  const form = document.getElementById('reservationForm');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    const data = new FormData(form);
+    fetch('reservation.php', { method:'POST', body:data })
+      .then(res => res.json())
+      .then(res => {
+        if(res.success){
+          document.getElementById('confirmation').style.display = 'block';
+          form.reset();
+          // Recharger Flatpickr pour désactiver la date réservée
+          fetch('reservations.json')
+            .then(res => res.json())
+            .then(dates => {
+              const disabledDates = dates.map(r => r.date);
+              flatpickr("#datePicker", {
+                enableTime: true,
+                dateFormat: "d/m/Y H:i",
+                minDate: "today",
+                time_24hr: true,
+                disable: disabledDates
+              });
+            });
+        } else {
+          alert(res.msg);
+        }
+      })
+      .catch(err => console.error(err));
+  });
+</script>
+
+</body>
+</html>
